@@ -1,0 +1,10 @@
+section{
+  display: grid;
+  grid-template-columns: 280px 1fr;
+}
+.container-sideBar {
+  max-width: 280px;
+  height: 100vh;
+  }
+  
+  
