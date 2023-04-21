@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData, NavLink } from 'react-router-dom'
 import './style.css'
 import { getContacts } from '../contact/Contacts'
 
@@ -9,7 +9,6 @@ export async function loader () {
 
 const Navbar = _ => {
   const { contacts } = useLoaderData()
-  // const contacts = []
   return (
     <nav>
       {
@@ -20,10 +19,19 @@ const Navbar = _ => {
                 <li
                   key={contact.id}
                 >
-                  <Link
+                  <NavLink
                     to={`contacts/${contact.id}`}
+                    className={({ isActive, isPending }) =>
+                      isActive
+                        ? 'active'
+                        : isPending
+                          ? 'pending'
+                          : ''}
                   >
-                    {
+                    <Link
+                      to={`contacts/${contact.id}`}
+                    >
+                      {
                       contact.first || contact.last
                         ? (
                           <>
@@ -34,8 +42,9 @@ const Navbar = _ => {
                           <i>No Name</i>
                           )
                     }{' '}
-                    {contact.favorite && <span>★</span>}
-                  </Link>
+                      {contact.favorite && <span>★</span>}
+                    </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>

@@ -1,15 +1,21 @@
-import { Form } from 'react-router-dom'
+import { Form, useLoaderData } from 'react-router-dom'
+import { getContact } from './Contacts'
 import './style.css'
 
+export async function loader ({ params }) {
+  const contact = await getContact(params.contactId)
+  return { contact }
+}
 export default function Contact () {
-  const contact = {
-    first: 'your',
-    last: 'Name',
-    avatar: 'https://placekitten.com/g/200/200',
-    twitter: 'your_twitter',
-    notes: 'some notes',
-    favorite: true
-  }
+  const { contact } = useLoaderData()
+  // const contact = {
+  //   first: 'your',
+  //   last: 'Name',
+  //   avatar: 'https://placekitten.com/g/200/200',
+  //   twitter: 'your_twitter',
+  //   notes: 'some notes',
+  //   favorite: true
+  // }
 
   const handleSubmit = (event) => {
     if (
@@ -24,11 +30,23 @@ export default function Contact () {
   return (
     <div id='contact'>
       <div>
-        <img
-          key={contact.avatar}
-          src={contact.avatar || null}
-          alt={contact.first + contact.last}
-        />
+        {
+          contact.avatar
+            ? (
+              <img
+                key={contact.avatar}
+                src={contact.avatar || null}
+                alt={contact.first + contact.last}
+              />
+              )
+            : (
+              <img
+                key='profile'
+                src='https://placekitten.com/g/200/200'
+                alt='no photo profile'
+              />
+              )
+        }
       </div>
       <div>
         <h1>

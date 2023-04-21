@@ -1,11 +1,11 @@
 import React from 'react'
-import { Form } from 'react-router-dom'
+import { Form, redirect } from 'react-router-dom'
 import './style.css'
 import { createContact } from '../contact/Contacts'
 
 export async function action () {
   const contact = await createContact()
-  return { contact }
+  return redirect(`/contacts/${contact.id}/edit`)
 }
 const HeaderSearch = () => {
   return (
